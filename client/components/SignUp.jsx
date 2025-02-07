@@ -21,7 +21,8 @@ export default function SignUp({ setUser }) {
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
     // Submit data to your backend API.
-    setUser(data);
+    setUser(data.name);
+    sessionStorage.setItem("user", data.name);
   };
 
   return (

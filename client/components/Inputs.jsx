@@ -1,10 +1,26 @@
 import { useRef, useState } from "react";
 import { Button, Input } from "@heroui/react";
-import { ImageUp, SendHorizonalIcon } from "lucide-react";
+import { ImageUpIcon, SendHorizonalIcon } from "lucide-react";
 
 export default function Inputs() {
   const [input, setInput] = useState("");
   const imageEl = useRef(null);
+
+  const onImageUpload = async (e) => {
+    const file = e.target.files[0];
+
+    // BASE 64
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+      const base64String = reader.result;
+      console.log(base64String);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -36,11 +52,12 @@ export default function Inputs() {
         name="file"
         accept="image/png, image/webp, image/jpeg"
         ref={imageEl}
+        onChange={onImageUpload}
         hidden
       />
 
       <Button type="Submit" className="bg-blue-100">
-        {input ? <SendHorizonalIcon /> : <ImageUp />}
+        {input ? <SendHorizonalIcon /> : <ImageUpIcon />}
       </Button>
     </form>
   );

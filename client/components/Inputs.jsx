@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Button, Input } from "@heroui/react";
 import { ImageUpIcon, SendHorizonalIcon } from "lucide-react";
 
-export default function Inputs() {
+export default function Inputs({ socket }) {
   const [input, setInput] = useState("");
   const imageEl = useRef(null);
 
@@ -14,6 +14,7 @@ export default function Inputs() {
 
     reader.onloadend = function () {
       const base64String = reader.result;
+      socket.emit("image", base64String);
       console.log(base64String);
     };
 

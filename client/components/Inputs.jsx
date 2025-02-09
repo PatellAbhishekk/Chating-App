@@ -38,10 +38,11 @@ export default function Inputs({ socket, name, setMessages }) {
 
     if (!input) {
       imageEl.current.click();
+      return;
     }
 
     const msg = {
-      type: "text",
+      type: input.startsWith("https") ? "link" : "text",
       content: input,
       user: {
         id: socket.id,

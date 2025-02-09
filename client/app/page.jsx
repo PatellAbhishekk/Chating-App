@@ -16,6 +16,21 @@ export default function Home() {
     });
   }, []);
 
+  useEffect(() => {
+    socket.on("new_user", (name) => {
+      const msg = {
+        type: "user",
+        content: name,
+        user: {
+          id: 0,
+          name: "",
+        },
+      };
+
+      setMessages((prevState) => [...prevState, msg]);
+    });
+  }, []);
+
   return (
     <HeroUIProvider>
       <div className="min-h-screen max-h-screen">

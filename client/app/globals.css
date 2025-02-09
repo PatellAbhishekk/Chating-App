@@ -20,3 +20,15 @@ body {
     ),
     radial-gradient(at 24% 86%, rgb(220, 252, 231) 0, transparent 22%);
 }
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+}

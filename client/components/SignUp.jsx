@@ -47,8 +47,15 @@ export default function SignUp({ setUser, socket }) {
             width={40}
           />
           <div className="flex flex-col">
-            <p className="text-md">MADE Room</p>
-            <p className="text-small text-default-500">made.phleebs.tech</p>
+            <p className="text-md">Chatting Room</p>
+            <a
+              href="https://abhishek.phleebs.tech/"
+              className="cursor-pointer text-default-500"
+            >
+              <p className="text-small text-default-500">
+                Abhishek.Phleebs.tech
+              </p>
+            </a>
           </div>
         </CardHeader>
 
@@ -78,7 +85,7 @@ export default function SignUp({ setUser, socket }) {
           <Link
             isExternal
             showAnchorIcon
-            href="https://github.com/shantanuuchak/made"
+            href="https://github.com/PatellAbhishekk/Chating-App"
           >
             Visit source code on GitHub.
           </Link>

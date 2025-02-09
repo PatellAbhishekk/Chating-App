@@ -17,18 +17,43 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(`Someone connected with ${socket.id} id.`);
+  console.log("A new user connected", socket.id);
 
-  socket.on("user", (data) => {
-    socket.broadcast.emit("new_user", data);
-  });
+  socket.on("message", async (message) => {
+    if (message.type === "text" && message.content.startsWith("@ai")) {
+      const response = await fetch("https://api.wakati.tech/ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: message.content.replaceAll("@ai"),
+        }),
+      });
 
-  socket.on("message", (data) => {
-    socket.broadcast.emit("new_message", data);
+      const data = await response.json();
+
+      const newMessage = {
+        ...message,
+        content: data.res.response,
+        name: "AI",
+        id: "AI",
+      };
+
+      console.log(newMessage);
+
+      io.emit("new_message", newMessage);
+    } else {
+      socket.broadcast.emit("new_message", message);
+    }
   });
 
   socket.on("typing", (data) => {
     socket.broadcast.emit("user_typing", data);
+  });
+
+  socket.on("user", (data) => {
+    socket.broadcast.emit("new_user", data);
   });
 });
 

@@ -4,6 +4,6 @@ COPY . .
 RUN bun install
  
 ARG PORT
-EXPOSE ${PORT:-8000}
+EXPOSE ${PORT:-8080}
  
 CMD ["bun", "server.ts"]

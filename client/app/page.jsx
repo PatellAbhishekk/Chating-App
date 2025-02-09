@@ -4,10 +4,17 @@ import { HeroUIProvider } from "@heroui/react";
 import { Messages, Inputs, SignUp } from "@/components";
 import { io } from "socket.io-client";
 
-const socket = io("https://madeapp-q3r5v.kinsta.app/");
+const socket = io("https://chating-app-h2oq1.kinsta.app/");
 
 export default function Home() {
   const [user, setUser] = useState(null);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    socket.on("new_message", (msg) => {
+      setMessages((prevState) => [...prevState, msg]);
+    });
+  }, []);
 
   return (
     <HeroUIProvider>
@@ -16,8 +23,8 @@ export default function Home() {
           <SignUp setUser={setUser} socket={socket} />
         ) : (
           <div className="relative min-h-screen max-h-screen">
-            <Messages />
-            <Inputs socket={socket} name={user} />
+            <Messages messages={messages} id={socket.id} />
+            <Inputs socket={socket} name={user} setMessages={setMessages} />
           </div>
         )}
       </div>

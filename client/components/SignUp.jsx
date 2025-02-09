@@ -11,8 +11,16 @@ import {
   Input,
 } from "@heroui/react";
 import { ChevronRightIcon } from "lucide-react";
+import { useEffect } from "react";
 
 export default function SignUp({ setUser, socket }) {
+  useEffect(() => {
+    const session = sessionStorage.getItem("user");
+    if (session) {
+      setUser(session);
+    }
+  }, []);
+
   const onSubmit = (e) => {
     // Prevent default browser page refresh.
     e.preventDefault();
@@ -21,6 +29,7 @@ export default function SignUp({ setUser, socket }) {
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
     // Submit data to your backend API.
+    socket.emit("user", data.name);
     setUser(data.name);
 
     sessionStorage.setItem("user", data.name);

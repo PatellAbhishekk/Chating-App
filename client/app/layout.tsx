@@ -8,7 +8,7 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Chatting App",
+  title: "MADE Room",
   description: "Anonymised chat. Make healthy conversations.",
   authors: { url: "https://shantanuuchak.tech", name: "Shantanu Chakrawarty" },
   keywords: ["Chat Room", "MADE App", "Anonymised chat"],

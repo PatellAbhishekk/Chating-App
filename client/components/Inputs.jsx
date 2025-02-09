@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Button, Input } from "@heroui/react";
 import { ImageUpIcon, SendHorizonalIcon } from "lucide-react";
 
-export default function Inputs({ socket, name }) {
+export default function Inputs({ socket, name, setMessages }) {
   const [input, setInput] = useState("");
   const imageEl = useRef(null);
 
@@ -25,6 +25,7 @@ export default function Inputs({ socket, name }) {
       };
 
       socket.emit("message", msg);
+      setMessages((prevState) => [...prevState, msg]);
     };
 
     if (file) {
@@ -49,6 +50,7 @@ export default function Inputs({ socket, name }) {
     };
 
     socket.emit("message", msg);
+    setMessages((prevState) => [...prevState, msg]);
 
     setInput("");
   };

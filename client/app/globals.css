@@ -21,14 +21,15 @@ body {
     radial-gradient(at 24% 86%, rgb(220, 252, 231) 0, transparent 22%);
 }
 
-@layer utilities {
-  /* Chrome, Safari and Opera */
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-  }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
 
-  .scrollbar-hidden {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-  }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.4);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.7);
 }

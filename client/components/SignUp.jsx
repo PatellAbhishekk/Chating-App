@@ -22,23 +22,17 @@ export default function SignUp({ setUser, socket }) {
   }, []);
 
   const onSubmit = (e) => {
-    // Prevent default browser page refresh.
     e.preventDefault();
-
-    // Get form data as an object.
     const data = Object.fromEntries(new FormData(e.currentTarget));
-
-    // Submit data to your backend API.
     socket.emit("user", data.name);
     setUser(data.name);
-
     sessionStorage.setItem("user", data.name);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <Card className="max-w-[300px]">
-        <CardHeader className="flex gap-3">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <Card className="max-w-sm shadow-lg">
+        <CardHeader className="flex items-center gap-3">
           <Image
             alt="MADE room logo"
             height={40}
@@ -47,14 +41,12 @@ export default function SignUp({ setUser, socket }) {
             width={40}
           />
           <div className="flex flex-col">
-            <p className="text-md">Chatting Room</p>
+            <p className="text-md font-semibold">Chatting Room</p>
             <a
               href="https://abhishek.phleebs.tech/"
-              className="cursor-pointer text-default-500"
+              className="text-sm text-gray-500 hover:underline"
             >
-              <p className="text-small text-default-500">
-                Abhishek.Phleebs.tech
-              </p>
+              Abhishek.Phleebs.tech
             </a>
           </div>
         </CardHeader>
@@ -73,8 +65,11 @@ export default function SignUp({ setUser, socket }) {
               type="text"
               autoComplete="off"
             />
-            <Button type="submit" className="gap-0">
-              Join <ChevronRightIcon />
+            <Button
+              type="submit"
+              className="w-full mt-4 bg-blue-600 text-white font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:bg-blue-700 active:scale-95"
+            >
+              Join <ChevronRightIcon className="w-4 h-4" />
             </Button>
           </Form>
         </CardBody>
@@ -86,6 +81,7 @@ export default function SignUp({ setUser, socket }) {
             isExternal
             showAnchorIcon
             href="https://github.com/PatellAbhishekk/Chating-App"
+            className="text-blue-500 hover:underline"
           >
             Visit source code on GitHub.
           </Link>

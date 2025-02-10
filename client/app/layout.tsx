@@ -8,10 +8,10 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "MADE Room",
+  title: "Chatting App - Anonymised Chat",
   description: "Anonymised chat. Make healthy conversations.",
-  authors: { url: "https://shantanuuchak.tech", name: "Shantanu Chakrawarty" },
-  keywords: ["Chat Room", "MADE App", "Anonymised chat"],
+  authors: { url: "https://Abhishek.phleebs.tech", name: "Abhishek Patel" },
+  keywords: ["Chat Room", "Chatting App", "Anonymised chat"],
 };
 
 export default function RootLayout({

@@ -6,7 +6,7 @@ export default function Chat({ content, own, type, name, timestamp }) {
   const [formattedTime, setFormattedTime] = useState("");
 
   useEffect(() => {
-    const validTimestamp = timestamp || new Date().toISOString(); // Fallback to current time if timestamp is missing
+    const validTimestamp = timestamp || new Date().toISOString();
     const date = new Date(validTimestamp);
 
     if (!isNaN(date.getTime())) {
@@ -17,62 +17,61 @@ export default function Chat({ content, own, type, name, timestamp }) {
     }
   }, [timestamp]);
 
-  const getMessageContent = () => {
-    switch (type) {
-      case "user":
-        return <NewUser name={name} />;
-      case "text":
-        return <p className="text-gray-800">{content}</p>;
-      case "link":
-        return (
-          <p className="underline text-blue-600 hover:text-blue-800">
-            <a href={content} target="_blank" rel="noopener noreferrer">
-              {content}
-            </a>
-          </p>
-        );
-      case "image":
-        return (
-          <Image
-            alt="image message"
-            src={content}
-            width={400}
-            onError={(e) => (e.target.src = "/fallback-image.png")}
-          />
-        );
-      default:
-        return <p className="text-red-500">Unsupported message type</p>;
-    }
-  };
+  const messageStyle = `w-fit max-w-[85%] md:max-w-md lg:max-w-lg shadow-md p-3 rounded-xl ${
+    type === "user"
+      ? "mx-auto bg-green-100"
+      : own
+      ? "ml-auto bg-blue-100"
+      : "bg-gray-200"
+  }`;
+
+  const messageTextStyle = `text-sm ${
+    own ? "text-right text-gray-800" : "text-left text-gray-700"
+  }`;
 
   return (
-    <div className="my-4">
-      <Card
-        className={`w-fit max-w-xs sm:max-w-md lg:max-w-lg bg-transparent shadow-md p-2 rounded-lg ${
-          own ? "ml-auto bg-blue-200" : "bg-gray-100"
-        } ${type === "user" && "mx-auto bg-green-50"}`}
-      >
-        <CardBody className="flex flex-col gap-1">
-          {/* Only show avatar and name if it's not your message */}
-          {!own && (
-            <div className="flex items-center gap-2 mb-1">
+    <div className="mb-3">
+      <Card className={messageStyle}>
+        <CardBody className="flex flex-col gap-2">
+          {/* Avatar and Name for non-user messages */}
+          {!own && type !== "user" && (
+            <div className="flex items-center gap-2">
               <Avatar
                 isBordered
-                color="default"
-                src={`https://ui-avatars.com/api/?name=${name}&background=random`}
                 size="sm"
+                src="https://avatar.iran.liara.run/public"
                 name={name}
               />
-              <span className="text-sm font-medium text-gray-800">{name}</span>
+              <span className="text-xs font-medium text-gray-900">{name}</span>
             </div>
           )}
 
           {/* Message Content */}
-          <div>{getMessageContent()}</div>
+          <div className={messageTextStyle}>
+            {type === "user" && <NewUser name={content} />}
+            {type === "text" && <p className="break-words">{content}</p>}
+            {type === "link" && (
+              <a
+                href={content}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-blue-700 hover:text-blue-900 break-words"
+              >
+                {content}
+              </a>
+            )}
+            {type === "image" && (
+              <Image
+                alt="image message"
+                src={content}
+                className="rounded-lg shadow-sm max-w-full h-auto"
+              />
+            )}
+          </div>
 
           {/* Timestamp */}
           <span
-            className={`text-xs text-gray-500 mt-1 ${own ? "self-end" : ""}`}
+            className={`text-[10px] text-gray-500 ${own ? "self-end" : ""}`}
           >
             {formattedTime}
           </span>

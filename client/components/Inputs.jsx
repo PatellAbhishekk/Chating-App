@@ -9,26 +9,21 @@ export default function Inputs({ socket, name, setMessages }) {
   const onImageUpload = async (e) => {
     const file = e.target.files[0];
 
-    // BASE 64
-    const reader = new FileReader();
-
-    reader.onloadend = function () {
-      const base64String = reader.result;
-
-      const msg = {
-        type: "image",
-        content: base64String,
-        user: {
-          id: socket.id,
-          name: name,
-        },
-      };
-
-      socket.emit("message", msg);
-      setMessages((prevState) => [...prevState, msg]);
-    };
-
     if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        const base64String = reader.result;
+        const msg = {
+          type: "image",
+          content: base64String,
+          user: {
+            id: socket.id,
+            name: name,
+          },
+        };
+        socket.emit("message", msg);
+        setMessages((prevState) => [...prevState, msg]);
+      };
       reader.readAsDataURL(file);
     }
   };
@@ -36,14 +31,14 @@ export default function Inputs({ socket, name, setMessages }) {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!input) {
+    if (!input.trim()) {
       imageEl.current.click();
       return;
     }
 
     const msg = {
       type: input.startsWith("https") ? "link" : "text",
-      content: input,
+      content: input.trim(),
       user: {
         id: socket.id,
         name: name,
@@ -52,13 +47,13 @@ export default function Inputs({ socket, name, setMessages }) {
 
     socket.emit("message", msg);
     setMessages((prevState) => [...prevState, msg]);
-
     setInput("");
   };
 
   return (
     <form
-      className="absolute bottom-0 w-full flex gap-0 sm:gap-1 mb-0 sm:mb-2 px-0 sm:px-8 max-w-6xl left-1/2 -translate-x-1/2"
+      className="fixed bottom-0 w-full flex gap-2 bg-white p-3 border-t border-gray-200 z-10"
+      style={{ zIndex: 10 }}
       onSubmit={onSubmit}
     >
       <Input
@@ -67,6 +62,7 @@ export default function Inputs({ socket, name, setMessages }) {
         placeholder="Enter a message..."
         onChange={(e) => setInput(e.target.value)}
         autoComplete="off"
+        className="flex-1"
       />
 
       <input
@@ -78,7 +74,7 @@ export default function Inputs({ socket, name, setMessages }) {
         hidden
       />
 
-      <Button type="Submit" className="bg-blue-100">
+      <Button type="submit" className="bg-blue-500 text-white">
         {input ? <SendHorizonalIcon /> : <ImageUpIcon />}
       </Button>
     </form>

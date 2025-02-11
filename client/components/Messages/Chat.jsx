@@ -1,11 +1,21 @@
-import { Card, CardBody, Avatar, Image } from "@heroui/react";
+import { Card, CardBody, Image } from "@heroui/react";
 import NewUser from "./NewUser";
 import { useEffect, useState } from "react";
 
+// Generate a unique avatar URL using the user's name
+function generateAvatarUrl(name) {
+  const seed = encodeURIComponent(name); // Ensure name is safe for URLs
+  return `https://api.dicebear.com/6.x/avataaars/svg?seed=${seed}`;
+}
+
 export default function Chat({ content, own, type, name, timestamp }) {
   const [formattedTime, setFormattedTime] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   useEffect(() => {
+    // Set the unique avatar URL whenever a new user joins
+    setAvatarUrl(generateAvatarUrl(name));
+
     const validTimestamp = timestamp || new Date().toISOString();
     const date = new Date(validTimestamp);
 
@@ -15,7 +25,7 @@ export default function Chat({ content, own, type, name, timestamp }) {
     } else {
       setFormattedTime("Invalid Time");
     }
-  }, [timestamp]);
+  }, [timestamp, name]);
 
   const messageStyle = `w-fit max-w-[85%] md:max-w-md lg:max-w-lg shadow-md p-3 rounded-xl ${
     type === "user"
@@ -36,11 +46,10 @@ export default function Chat({ content, own, type, name, timestamp }) {
           {/* Avatar and Name for non-user messages */}
           {!own && type !== "user" && (
             <div className="flex items-center gap-2">
-              <Avatar
-                isBordered
-                size="sm"
-                src="https://avatar.iran.liara.run/public"
-                name={name}
+              <img
+                className="w-8 h-8 rounded-full border"
+                src={avatarUrl}
+                alt={name}
               />
               <span className="text-xs font-medium text-gray-900">{name}</span>
             </div>

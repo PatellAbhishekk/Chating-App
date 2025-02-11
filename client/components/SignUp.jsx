@@ -10,7 +10,6 @@ import {
   Form,
   Input,
 } from "@heroui/react";
-import { ChevronRightIcon } from "lucide-react";
 import { useEffect } from "react";
 
 export default function SignUp({ setUser, socket }) {
@@ -69,7 +68,7 @@ export default function SignUp({ setUser, socket }) {
               type="submit"
               className="w-full mt-4 bg-blue-600 text-white font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:bg-blue-700 active:scale-95"
             >
-              Join <ChevronRightIcon className="w-4 h-4" />
+              Join
             </Button>
           </Form>
         </CardBody>

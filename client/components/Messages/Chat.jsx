@@ -64,7 +64,7 @@ export default function Chat({ content, own, type, name, timestamp }) {
                 href={content}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-blue-700 hover:text-blue-900 break-words"
+                className="underline text-gray-700 hover:text-gray-900 break-words"
               >
                 {content}
               </a>

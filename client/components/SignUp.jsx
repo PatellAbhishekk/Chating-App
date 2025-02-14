@@ -66,7 +66,7 @@ export default function SignUp({ setUser, socket }) {
             />
             <Button
               type="submit"
-              className="w-full mt-4 bg-blue-600 text-white font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:bg-blue-700 active:scale-95"
+              className="w-full mt-4 bg-green-600 text-white font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:bg-green-700 active:scale-95"
             >
               Join
             </Button>

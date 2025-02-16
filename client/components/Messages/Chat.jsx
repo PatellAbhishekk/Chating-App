@@ -1,32 +1,38 @@
 import { Card, CardBody, Image } from "@heroui/react";
 import NewUser from "./NewUser";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 // Generate a unique avatar URL using the user's name
-function generateAvatarUrl(name) {
-  const seed = encodeURIComponent(name); // Ensure name is safe for URLs
-  return `https://api.dicebear.com/6.x/avataaars/svg?seed=${seed}`;
-}
+const generateAvatarUrl = (name) =>
+  name
+    ? `https://api.dicebear.com/6.x/avataaars/svg?seed=${encodeURIComponent(
+        name
+      )}`
+    : null;
 
 export default function Chat({ content, own, type, name, timestamp }) {
   const [formattedTime, setFormattedTime] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+
+  // Memoize avatar URL to prevent unnecessary re-calculations
+  const avatarUrl = useMemo(() => generateAvatarUrl(name), [name]);
 
   useEffect(() => {
-    // Set the unique avatar URL whenever a new user joins
-    setAvatarUrl(generateAvatarUrl(name));
-
+    // Ensure timestamp is valid
     const validTimestamp = timestamp || new Date().toISOString();
     const date = new Date(validTimestamp);
 
-    if (!isNaN(date.getTime())) {
-      const options = { hour: "2-digit", minute: "2-digit", hour12: false };
-      setFormattedTime(date.toLocaleTimeString("en-US", options));
-    } else {
-      setFormattedTime("Invalid Time");
-    }
-  }, [timestamp, name]);
+    setFormattedTime(
+      !isNaN(date.getTime())
+        ? date.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          })
+        : "Invalid Time"
+    );
+  }, [timestamp]);
 
+  // Message styling
   const messageStyle = `w-fit max-w-[85%] md:max-w-md lg:max-w-lg shadow-md p-3 rounded-xl ${
     type === "user"
       ? "mx-auto bg-green-100"
@@ -43,8 +49,8 @@ export default function Chat({ content, own, type, name, timestamp }) {
     <div className="mb-3">
       <Card className={messageStyle}>
         <CardBody className="flex flex-col gap-2">
-          {/* Avatar and Name for non-user messages */}
-          {!own && type !== "user" && (
+          {/* Avatar and Name (Only for non-user messages) */}
+          {!own && type !== "user" && avatarUrl && (
             <div className="flex items-center gap-2">
               <img
                 className="w-8 h-8 rounded-full border"
@@ -69,12 +75,14 @@ export default function Chat({ content, own, type, name, timestamp }) {
                 {content}
               </a>
             )}
-            {type === "image" && (
-              <Image
-                alt="image message"
-                src={content}
-                className="rounded-lg shadow-sm max-w-full h-auto"
-              />
+            {type === "image" && content && (
+              <div className="max-w-[250px] md:max-w-[300px] lg:max-w-[400px] overflow-hidden rounded-lg">
+                <Image
+                  alt="image message"
+                  src={content}
+                  className="rounded-lg shadow-sm w-full h-auto object-cover"
+                />
+              </div>
             )}
           </div>
 

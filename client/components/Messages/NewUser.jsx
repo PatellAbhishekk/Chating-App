@@ -1,15 +1,21 @@
+import { motion } from "framer-motion";
 import { UserPlusIcon } from "lucide-react";
 
 export default function NewUser({ name }) {
   return (
-    <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-gray-100 to-gray-50 rounded-xl shadow-md animate-slide-in max-w-full">
-      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 shadow-inner shrink-0">
-        <UserPlusIcon className="w-6 h-6 text-green-800" />
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-50 to-gray-50 border border-green-200 rounded-lg shadow-md animate-slide-in max-w-full"
+    >
+      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-100 shadow-inner shrink-0">
+        <UserPlusIcon className="w-6 h-6 text-green-700" />
       </div>
-      <p className="text-sm font-medium text-gray-900 break-words">
+      <p className="text-sm font-medium text-gray-800 break-words">
         <span className="font-bold text-green-700">{name}</span> has joined the
-        chat.
+        chat! 🎉
       </p>
-    </div>
+    </motion.div>
   );
 }

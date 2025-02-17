@@ -33,7 +33,7 @@ export default function Chat({ content, own, type, name, timestamp }) {
   }, [timestamp]);
 
   // Message styling
-  const messageStyle = `w-fit max-w-[85%] md:max-w-md lg:max-w-lg shadow-md p-3 rounded-xl ${
+  const messageStyle = `w-fit max-w-[85%] md:max-w-md lg:max-w-lg shadow-md p-2 rounded-xl ${
     type === "user"
       ? "mx-auto bg-green-100"
       : own

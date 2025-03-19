@@ -58,10 +58,12 @@ export default function Inputs({ socket, name, setMessages }) {
 
   return (
     <form
-      className="absolute bottom-3 w-full flex items-center gap-3 px-4 max-w-4xl left-1/2 -translate-x-1/2 bg-white shadow-md rounded-full py-2"
+      className="fixed bottom-3 left-1/2 -translate-x-1/2 w-full max-w-4xl 
+                 bg-white shadow-lg border border-gray-300 rounded-full 
+                 z-50 backdrop-blur-lg px-4 py-2 flex items-center gap-3"
       onSubmit={onSubmit}
     >
-      {/* Input Field */}
+      {/* ✅ Modern Input Field */}
       <Input
         ref={inputEl}
         type="text"
@@ -69,10 +71,12 @@ export default function Inputs({ socket, name, setMessages }) {
         placeholder="Type a message..."
         onChange={(e) => setInput(e.target.value)}
         autoComplete="off"
-        className="flex-1 px-4 py-2 text-gray-800 border-none focus:ring-0 outline-none rounded-full bg-gray-100"
+        className="flex-1 px-4 py-2 text-gray-800 border-none rounded-full 
+                   bg-gray-100 focus:ring-2 focus:ring-blue-400 focus:outline-none 
+                   transition duration-300"
       />
 
-      {/* Hidden Image Upload */}
+      {/* ✅ Hidden Image Upload */}
       <input
         type="file"
         name="file"
@@ -82,10 +86,12 @@ export default function Inputs({ socket, name, setMessages }) {
         hidden
       />
 
-      {/* Send / Upload Button */}
+      {/* ✅ Modern Send/Upload Button */}
       <Button
         type="submit"
-        className="p-2 w-10 h-10 flex items-center justify-center rounded-full bg-blue-500 text-white hover:bg-blue-600 transition"
+        className="p-2 w-10 h-10 flex items-center justify-center rounded-full 
+                   bg-blue-500 text-white shadow-sm border border-blue-400 
+                   hover:bg-blue-600 hover:scale-110 transition duration-300"
       >
         {input ? <SendHorizonalIcon size={20} /> : <ImageUpIcon size={20} />}
       </Button>

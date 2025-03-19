@@ -76,11 +76,14 @@ export default function Chat({ content, own, type, name, timestamp }) {
               </a>
             )}
             {type === "image" && content && (
-              <div className="max-w-[250px] md:max-w-[300px] lg:max-w-[400px] overflow-hidden rounded-lg">
+              <div
+                className="max-w-[200px] md:max-w-[250px] lg:max-w-[300px] 
+             overflow-hidden rounded-md border border-gray-300"
+              >
                 <Image
                   alt="image message"
                   src={content}
-                  className="rounded-lg shadow-sm w-full h-auto object-cover"
+                  className="rounded-md shadow-sm w-full h-auto object-contain"
                 />
               </div>
             )}

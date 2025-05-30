@@ -100,7 +100,8 @@ export default function SignUp({ setUser, socket }) {
           transform: scale(1.05);
         }
       `}</style>
-      <Card className="max-w-sm w-full sm:max-w-sm shadow-lg animate-card-gradient">
+
+      <Card className="max-w-sm w-full sm:max-w-sm shadow-lg animate-card-gradient glassmorphic-card">
         <CardHeader className="flex items-center gap-3">
           <Image
             alt="MADE room logo"

@@ -142,12 +142,12 @@ export default function SignUp({ setUser, socket }) {
           </Form>
         </CardBody>
         <Divider />
-        <CardFooter>
+        <CardFooter className="flex justify-center">
           <Link
             isExternal
             showAnchorIcon
             href="https://github.com/PatellAbhishekk/Chating-App"
-            className="github-link text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline text-center"
           >
             Visit source code on GitHub.
           </Link>

@@ -102,7 +102,7 @@ export default function SignUp({ setUser, socket }) {
       `}</style>
 
       <Card className="max-w-sm w-full sm:max-w-sm shadow-lg animate-card-gradient glassmorphic-card">
-        <CardHeader className="flex items-center gap-3">
+        <CardHeader className="flex justify-center items-center gap-3">
           <Image
             alt="MADE room logo"
             height={40}
@@ -110,7 +110,7 @@ export default function SignUp({ setUser, socket }) {
             src="favicon.ico"
             width={40}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center text-center">
             <p className="text-md font-semibold">Chatting Room</p>
             <a
               href="https://abhishek.phleebs.tech/"
@@ -120,6 +120,7 @@ export default function SignUp({ setUser, socket }) {
             </a>
           </div>
         </CardHeader>
+
         <Divider />
         <CardBody>
           <Form onSubmit={onSubmit} validationBehavior="native">

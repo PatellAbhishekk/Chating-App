@@ -10,14 +10,34 @@ const generateAvatarUrl = (name) =>
       )}`
     : null;
 
+// Generate a consistent color based on the user's name
+const getColorFromName = (name) => {
+  const colors = [
+    "text-red-500",
+    "text-green-500",
+    "text-blue-500",
+    "text-yellow-500",
+    "text-purple-500",
+    "text-pink-500",
+    "text-teal-500",
+    "text-orange-500",
+  ];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % colors.length;
+  return colors[index];
+};
+
 export default function Chat({ content, own, type, name, timestamp }) {
   const [formattedTime, setFormattedTime] = useState("");
 
-  // Memoize avatar URL to prevent unnecessary re-calculations
+  // Memoize avatar URL and color to prevent unnecessary re-calculations
   const avatarUrl = useMemo(() => generateAvatarUrl(name), [name]);
+  const nameColor = useMemo(() => getColorFromName(name), [name]);
 
   useEffect(() => {
-    // Ensure timestamp is valid
     const validTimestamp = timestamp || new Date().toISOString();
     const date = new Date(validTimestamp);
 
@@ -32,7 +52,6 @@ export default function Chat({ content, own, type, name, timestamp }) {
     );
   }, [timestamp]);
 
-  // Message styling
   const messageStyle = `w-fit max-w-[85%] md:max-w-md lg:max-w-lg shadow-md p-2 rounded-xl ${
     type === "user"
       ? "mx-auto bg-green-100"
@@ -57,7 +76,7 @@ export default function Chat({ content, own, type, name, timestamp }) {
                 src={avatarUrl}
                 alt={name}
               />
-              <span className="text-xs font-medium text-gray-900">{name}</span>
+              <span className={`text-xs font-medium ${nameColor}`}>{name}</span>
             </div>
           )}
 
@@ -76,10 +95,7 @@ export default function Chat({ content, own, type, name, timestamp }) {
               </a>
             )}
             {type === "image" && content && (
-              <div
-                className="max-w-[200px] md:max-w-[250px] lg:max-w-[300px] 
-             overflow-hidden rounded-md border border-gray-300"
-              >
+              <div className="max-w-[200px] md:max-w-[250px] lg:max-w-[300px] overflow-hidden rounded-md border border-gray-300">
                 <Image
                   alt="image message"
                   src={content}

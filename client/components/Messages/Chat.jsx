@@ -1,4 +1,6 @@
+// Chat.jsx
 import { Card, CardBody, Image } from "@heroui/react";
+// import { useState } from "react";
 import NewUser from "./NewUser";
 import { useEffect, useState, useMemo } from "react";
 
